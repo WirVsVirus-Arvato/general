@@ -9,6 +9,7 @@ services:
     image: wirvsvirusarvato/server:latest
     ports:
       - 8080:8080
+    command: ["/wait-for-postgres", "db", "java", "-jar", "-Dspring.profiles.active=prod", "/corona-app.jar"]
 
   db:
     image: postgres:10.6-alpine
