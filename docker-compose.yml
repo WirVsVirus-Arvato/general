@@ -19,6 +19,18 @@ services:
       POSTGRES_DB: corona-app
     volumes:
       - coronaapp:/var/lib/postgresql/data
-
+  backend:
+    image: wirvsvirusarvato/backend
+    environment:
+      DATABASE_URL=mysql://myuser:mypassword@mariadb:3306/quarantaenehelfer?serverVersion=5.7
+      SERVICE_URL=http://server:8080
+  mariadb:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: changeme
+      MYSQL_DATABASE: quarantaenehelfer
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
 volumes:
   coronaapp:
