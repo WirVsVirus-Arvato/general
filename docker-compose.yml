@@ -36,6 +36,9 @@ services:
       MYSQL_DATABASE: quarantaenehelfer
       MYSQL_USER: myuser
       MYSQL_PASSWORD: mypassword
+    volumes:
+      - backend:/var/lib/mysql
 
 volumes:
   coronaapp:
+  backend:
