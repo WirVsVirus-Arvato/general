@@ -3,12 +3,12 @@ services:
   frontend:
     image: wirvsvirusarvato/webapp:latest
     ports:
-      - 80:80
+      - 8090:80
 
   server:
     image: wirvsvirusarvato/server:latest
     ports:
-      - 8080:8080
+      - 8091:8080
     command: ["/wait-for-postgres", "db", "java", "-jar", "-Dspring.profiles.active=prod", "/corona-app.jar"]
 
   db:
@@ -19,13 +19,15 @@ services:
       POSTGRES_DB: corona-app
     volumes:
       - coronaapp:/var/lib/postgresql/data
-      
+
   backend:
     image: wirvsvirusarvato/backend
+    ports:
+      - 8092:8080
     environment:
       DATABASE_URL: mysql://myuser:mypassword@mariadb:3306/quarantaenehelfer?serverVersion=5.7
-      SERVICE_URL: http://server:8080
-      
+      SERVICE_URL: http://server:8091
+
   mariadb:
     image: mariadb
     restart: always
@@ -34,6 +36,6 @@ services:
       MYSQL_DATABASE: quarantaenehelfer
       MYSQL_USER: myuser
       MYSQL_PASSWORD: mypassword
-      
+
 volumes:
   coronaapp:
